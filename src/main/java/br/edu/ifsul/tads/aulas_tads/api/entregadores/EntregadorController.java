@@ -1,4 +1,4 @@
-package br.edu.ifsul.tads.aulas_tads.api.produtos;
+package br.edu.ifsul.tads.aulas_tads.api.entregadores;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -10,37 +10,37 @@ import java.net.URI;
 import java.util.List;
 
 @RestController
-@RequestMapping("api/v1/produtos")
-public class ProdutoController {
+@RequestMapping("api/v1/entregadores")
+public class EntregadorController {
     @Autowired
-    private ProdutoService service;
+    private EntregadorService service;
     @GetMapping
-    public ResponseEntity<List<ProdutoDTO>> selectAll() {
-        return ResponseEntity.ok(service.getProdutos());
+    public ResponseEntity<List<EntregadorDTO>> selectAll() {
+        return ResponseEntity.ok(service.getEntregadores());
     }
     @GetMapping("{id}")
-    public ResponseEntity<ProdutoDTO> selectById(@PathVariable("id") Long id) {
-        return ResponseEntity.ok(service.getProdutoById(id));
+    public ResponseEntity<EntregadorDTO> selectById(@PathVariable("id") Long id) {
+        return ResponseEntity.ok(service.getEntregadorById(id));
     }
     @GetMapping("/nome/{nome}")
-    public ResponseEntity<List<ProdutoDTO>> selectByNome(@PathVariable("nome") String nome) {
-        List<ProdutoDTO> produtos = service.getProdutosByNome(nome);
-        return produtos.isEmpty() ?
+    public ResponseEntity<List<EntregadorDTO>> selectByNome(@PathVariable("nome") String nome) {
+        List<EntregadorDTO> entregadores = service.getEntregadoresByNome(nome);
+        return entregadores.isEmpty() ?
                 ResponseEntity.noContent().build() :
-                ResponseEntity.ok(produtos);
+                ResponseEntity.ok(entregadores);
     }
     @PostMapping
     @Secured({"ROLE_ADMIN"})
-    public ResponseEntity<String> insert(@RequestBody Produto produto){
-        ProdutoDTO p = service.insert(produto);
+    public ResponseEntity<String> insert(@RequestBody Entregador entregador){
+        EntregadorDTO p = service.insert(entregador);
         URI location = getUri(p.getId());
         return ResponseEntity.created(location).build();
     }
 
     @PutMapping("{id}")
-    public ResponseEntity<ProdutoDTO> update(@PathVariable("id") Long id, @RequestBody Produto produto){
-        produto.setId(id);
-        ProdutoDTO p = service.update(produto, id);
+    public ResponseEntity<EntregadorDTO> update(@PathVariable("id") Long id, @RequestBody Entregador entregador){
+        entregador.setId(id);
+        EntregadorDTO p = service.update(entregador, id);
         return p != null ?
                 ResponseEntity.ok(p) :
                 ResponseEntity.notFound().build();
