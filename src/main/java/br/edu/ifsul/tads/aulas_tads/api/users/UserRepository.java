@@ -1,4 +1,4 @@
-package br.edu.ifsul.tads.aulas_tads.api.clientes;
+package br.edu.ifsul.tads.aulas_tads.api.users;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
