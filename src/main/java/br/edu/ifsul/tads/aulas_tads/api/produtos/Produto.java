@@ -1,6 +1,7 @@
 package br.edu.ifsul.tads.aulas_tads.api.produtos;
 
 import lombok.Data;
+import org.modelmapper.ModelMapper;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -19,4 +20,9 @@ public class Produto {
     private BigDecimal valor;
     private Long estoque;
     private Boolean situacao;
+
+    public static Produto create(ProdutoDTO p){
+        ModelMapper modelMapper = new ModelMapper();
+        return modelMapper.map(p, Produto.class);
+    }
 }

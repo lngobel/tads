@@ -1,6 +1,9 @@
 package br.edu.ifsul.tads.aulas_tads.api.entregadores;
 
+import br.edu.ifsul.tads.aulas_tads.api.produtos.Produto;
+import br.edu.ifsul.tads.aulas_tads.api.produtos.ProdutoDTO;
 import lombok.Data;
+import org.modelmapper.ModelMapper;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -18,4 +21,9 @@ public class Entregador {
     private String email;
     private String senha;
     private Boolean status;
+
+    public static Entregador create(EntregadorDTO e){
+        ModelMapper modelMapper = new ModelMapper();
+        return modelMapper.map(e, Entregador.class);
+    }
 }

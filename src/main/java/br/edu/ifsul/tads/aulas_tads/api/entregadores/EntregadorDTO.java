@@ -11,6 +11,7 @@ public class EntregadorDTO {
     private String nome;
     private String data_nasc;
     private String email;
+    private String senha;
     private Boolean status;
 
     public static EntregadorDTO create(Entregador p){
