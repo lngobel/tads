@@ -1,5 +1,7 @@
 package br.edu.ifsul.tads.aulas_tads.api.entregadores;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
@@ -11,18 +13,22 @@ import java.util.List;
 
 @RestController
 @RequestMapping("api/v1/entregadores")
+@Api(value = "Entregadores")
 public class EntregadorController {
     @Autowired
     private EntregadorService service;
     @GetMapping
+    @ApiOperation(value = "Retorna todos os entregadores cadastrados.")
     public ResponseEntity<List<EntregadorDTO>> selectAll() {
         return ResponseEntity.ok(service.getEntregadores());
     }
     @GetMapping("{id}")
+    @ApiOperation(value = "Retorna um entregador pelo campo identificador.")
     public ResponseEntity<EntregadorDTO> selectById(@PathVariable("id") Long id) {
         return ResponseEntity.ok(service.getEntregadorById(id));
     }
     @GetMapping("/nome/{nome}")
+    @ApiOperation(value = "Retorna uma lista de entregadores pelo nome.")
     public ResponseEntity<List<EntregadorDTO>> selectByNome(@PathVariable("nome") String nome) {
         List<EntregadorDTO> entregadores = service.getEntregadoresByNome(nome);
         return entregadores.isEmpty() ?
@@ -31,6 +37,7 @@ public class EntregadorController {
     }
     @PostMapping
     @Secured({"ROLE_ADMIN"})
+    @ApiOperation(value = "Insere um novo entregador.")
     public ResponseEntity<String> insert(@RequestBody Entregador entregador){
         EntregadorDTO p = service.insert(entregador);
         URI location = getUri(p.getId());
@@ -38,6 +45,7 @@ public class EntregadorController {
     }
 
     @PutMapping("{id}")
+    @ApiOperation(value = "Altera um entregador existente.")
     public ResponseEntity<EntregadorDTO> update(@PathVariable("id") Long id, @RequestBody Entregador entregador){
         entregador.setId(id);
         EntregadorDTO p = service.update(entregador, id);
@@ -47,6 +55,7 @@ public class EntregadorController {
     }
 
     @DeleteMapping("{id}")
+    @ApiOperation(value = "Deleta um entregador.")
     public ResponseEntity<String> delete(@PathVariable("id") Long id){
         service.delete(id);
         return ResponseEntity.ok().build();
